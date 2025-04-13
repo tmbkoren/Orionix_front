@@ -10,9 +10,11 @@ type Props = {
 
 export default function WeatherDataDisplay({ weatherData }: Props) {
   const getIconByQuality = (quality: string) => {
-    if (quality === 'poor') {
+    if (quality === 'Poor') {
       return '☁️';
-    } else {
+    } else if (quality === 'Decent') {
+      return '🌤️';
+    } else if (quality === 'Excellent') {
       return '☀️';
     }
   };
