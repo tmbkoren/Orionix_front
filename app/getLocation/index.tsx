@@ -7,30 +7,7 @@ import EventDisplay from '../components/EventDisplay';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import WeatherDataDisplay from '../components/WeatherDataDisplay';
 import Sorter from '../components/Sorter';
-
-const events1 = [
-  {
-    id: '1',
-    name: 'Concert',
-    date: '2023-10-01',
-    time: 'New York',
-    rarity: 5,
-  },
-  {
-    id: '2',
-    name: 'Art Exhibition',
-    date: '2023-10-05',
-    time: 'Los Angeles',
-    rarity: 3,
-  },
-  {
-    id: '3',
-    name: 'Food Festival',
-    date: '2023-10-10',
-    time: 'Chicago',
-    rarity: 7,
-  },
-];
+import MapPointsView from '../components/MapPointsView';
 
 export default function GetLocationPage() {
   const [coordinates, setCoordinates] = useState<{
@@ -69,6 +46,17 @@ export default function GetLocationPage() {
     weather_message: string;
     event_message: string;
   } | null>(null);
+  const [pointsOfInterest, setPointsOfInterest] = useState<
+    | {
+        id: string;
+        longitude: number;
+        latitude: number;
+        name: string;
+      }[]
+    | undefined
+  >(undefined);
+  const [showPointsOfInterest, setShowPointsOfInterest] =
+    useState<boolean>(false);
 
   const sortEvents = (
     events: any[],
@@ -93,6 +81,34 @@ export default function GetLocationPage() {
         return 0; // Default case, no sorting
       });
     return sortedEvents;
+  };
+
+  const fetchPOIs = async () => {
+    if (coordinates) {
+      try {
+        const response = await fetch(
+          `${process.env.EXPO_PUBLIC_API_URL}/getNearbyPlaces?lat=${coordinates.latitude}&lon=${coordinates.longitude}`
+        );
+        const data = await response.json();
+        console.log('Points of Interest:', data);
+        setPointsOfInterest(data);
+        setShowPointsOfInterest(true);
+      } catch (error) {
+        console.error('Error fetching points of interest:', error);
+      }
+    } else {
+      try {
+        const response = await fetch(
+          `${process.env.EXPO_PUBLIC_API_URL}/getNearbyPlacesZip?zip_code=${zipCode}`
+        );
+        const data = await response.json();
+        console.log('Points of Interest:', data);
+        setPointsOfInterest(data);
+        setShowPointsOfInterest(true);
+      } catch (error) {
+        console.error('Error fetching points of interest:', error);
+      }
+    }
   };
 
   useEffect(() => {
@@ -159,6 +175,41 @@ export default function GetLocationPage() {
     }
   }, [zipCode]);
 
+  useEffect(() => {
+    console.log(coordinates);
+    if (coordinates) {
+      console.log('Fetching weather data for coordinates:', coordinates);
+      const fetchWeatherData = async () => {
+        try {
+          const weatherResData = await fetch(
+            `${process.env.EXPO_PUBLIC_API_URL}/weatherTypeByCoordinates?lat=${coordinates.latitude}&lon=${coordinates.longitude}`
+          );
+          console.log('Weather response:', weatherResData);
+          const weatherData = await weatherResData.json();
+          console.log('Weather data:', weatherData);
+          setCurrentWeatherData(weatherData);
+          setModalVisible(false);
+        } catch (error) {
+          console.error('Error fetching weather data:', error);
+        }
+      };
+      fetchWeatherData();
+      const fetchEventData = async () => {
+        try {
+          const eventResData = await fetch(
+            `${process.env.EXPO_PUBLIC_API_URL}/futureEvents`
+          );
+          const eventData = await eventResData.json();
+          console.log('Event data:', eventData);
+          setEvents(eventData);
+        } catch (error) {
+          console.error('Error fetching event data:', error);
+        }
+      };
+      fetchEventData();
+    }
+  }, [coordinates]);
+
   return (
     <GestureHandlerRootView style={styles.container}>
       {currentWeatherData && (
@@ -173,7 +224,10 @@ export default function GetLocationPage() {
             setSortDirection={setSortDirection}
           />
           <EventDisplay events={sortedEvents} />
-          <Button title={'Show nearby points of interest'} onPress={() => {}} />
+          <Button
+            title={'Show nearby points of interest'}
+            onPress={fetchPOIs}
+          />
         </View>
       ) : (
         <Text style={styles.text}>No events found.</Text>
@@ -186,6 +240,12 @@ export default function GetLocationPage() {
         giveCoordinates={setCoordinates}
         curCoordinates={coordinates}
       />
+      {pointsOfInterest && showPointsOfInterest && (
+        <MapPointsView
+          locations={pointsOfInterest}
+          onClose={() => setShowPointsOfInterest(false)}
+        />
+      )}
     </GestureHandlerRootView>
   );
 }
