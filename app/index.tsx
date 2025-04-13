@@ -1,4 +1,4 @@
-import { ImageBackground } from 'expo-image';
+import { Video } from 'expo-av';
 import { StyleSheet, Text, View } from 'react-native';
 import Button from './components/Button';
 import { useRouter } from 'expo-router';
@@ -16,16 +16,22 @@ export default function Index() {
 
   return (
     <View style={styles.container}>
-      <ImageBackground
-        source={require('@/assets/images/bg_gif.gif')}
-        style={styles.background}
-      >
-        <Text style={styles.text}>Welcome!</Text>
-        <Button
-          title='Get Started'
-          onPress={() => setShowModal(true)}
-        />
-      </ImageBackground>
+      <Video
+        source={require('@/assets/horizontal_blue.mp4')}
+        style={StyleSheet.absoluteFill}
+        resizeMode="cover"
+        isLooping
+        shouldPlay
+        isMuted
+      />
+      
+      <Text style={styles.text}>Welcome to Orionix.</Text>
+      
+      <Button
+        title='Get Started'
+        onPress={() => setShowModal(true)}
+      />
+      
       <ConfirmationModal
         isVisible={showModal}
         onClose={onClose}
@@ -49,7 +55,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   text: {
-    color: 'white',
-    fontSize: 24,
+    color: '#66FCF1',
+    fontSize: 40,
+    fontWeight: 'bold',
+    letterSpacing: 2,
+    textShadowColor: 'rgba(0, 255, 255, 0.7)',
+    textShadowOffset: { width: 0, height: 0 },
+    textShadowRadius: 10,
   },
 });
