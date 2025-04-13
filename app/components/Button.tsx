@@ -1,5 +1,6 @@
 import React from 'react';
 import { TouchableOpacity, Text, StyleSheet } from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
 
 interface ButtonProps {
     title: string;
@@ -10,29 +11,43 @@ interface ButtonProps {
 const Button: React.FC<ButtonProps> = ({ title, onPress, disabled = false }) => {
     return (
         <TouchableOpacity
-            style={[styles.button, disabled && styles.disabledButton]}
             onPress={onPress}
             disabled={disabled}
+            activeOpacity={0.8}
         >
-            <Text style={styles.buttonText}>{title}</Text>
+            <LinearGradient
+                colors={['#0f0c29', '#302b63', '#24243e']}
+                start={{ x: 0, y: 0 }}
+                end={{ x: 1, y: 1 }}
+                style={[styles.button, disabled && styles.disabledButton]}
+            >
+                <Text style={styles.buttonText}>{title}</Text>
+            </LinearGradient>
         </TouchableOpacity>
     );
 };
 
 const styles = StyleSheet.create({
     button: {
-        backgroundColor: '#007BFF',
-        padding: 10,
-        borderRadius: 5,
+        paddingVertical: 15,
+        paddingHorizontal: 20,
+        borderRadius: 12,
         alignItems: 'center',
+        backgroundColor: '#0b0c10',
+        shadowColor: '#66FCF1',
+        shadowOpacity: 0.8,
+        shadowOffset: { width: 0, height: 0 },
+        shadowRadius: 10,
+        elevation: 8,
     },
     disabledButton: {
-        backgroundColor: '#A9A9A9',
+        backgroundColor: '#3a3a3a',
     },
     buttonText: {
-        color: '#FFFFFF',
-        fontSize: 16,
+        color: '#66FCF1',
+        fontSize: 18,
         fontWeight: 'bold',
+        letterSpacing: 1.5,
     },
 });
 
