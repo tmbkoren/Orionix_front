@@ -35,7 +35,7 @@ export default function WeatherDataDisplay({ weatherData }: Props) {
 const styles = StyleSheet.create({
   container: {
     marginTop: 30,
-    backgroundColor: '#f9f9f9',
+    backgroundColor: '#000000',
     padding: 15,
     marginBottom: 5,
     borderRadius: 8,
@@ -47,6 +47,6 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 20,
-    color: 'black',
+    color: '#A259FF',
   },
 });
