@@ -1,16 +1,35 @@
 import { ImageBackground } from 'expo-image';
 import { StyleSheet, Text, View } from 'react-native';
 import Button from './components/Button';
+import { useRouter } from 'expo-router';
+import { useState } from 'react';
+import ConfirmationModal from './components/ConfirmationModal';
 
 export default function Index() {
+  console.log('Index page loaded');
+  const router = useRouter();
+  const [showModal, setShowModal] = useState<boolean>(false);
+  const onClose = () => {
+    setShowModal(false);
+    router.navigate('/getLocation');
+  };
+
   return (
     <View style={styles.container}>
-      <ImageBackground source={require('@/assets/images/bg_gif.gif')} style={styles.background}>
-        <Text style={styles.text}>
-          Welcome!
-        </Text>
-        <Button title='Get Started' onPress={() => console.log('Button Pressed')} />
+      <ImageBackground
+        source={require('@/assets/images/bg_gif.gif')}
+        style={styles.background}
+      >
+        <Text style={styles.text}>Welcome!</Text>
+        <Button
+          title='Get Started'
+          onPress={() => setShowModal(true)}
+        />
       </ImageBackground>
+      <ConfirmationModal
+        isVisible={showModal}
+        onClose={onClose}
+      />
     </View>
   );
 }
