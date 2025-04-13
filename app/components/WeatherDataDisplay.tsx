@@ -32,10 +32,10 @@ export default function WeatherDataDisplay({ weatherData }: Props) {
 
 const styles = StyleSheet.create({
   container: {
+    marginTop: 30,
     backgroundColor: '#f9f9f9',
-    flex: 1,
     padding: 15,
-    marginBottom: 10,
+    marginBottom: 5,
     borderRadius: 8,
     elevation: 1, // For Android shadow
     shadowColor: '#000', // For iOS shadow

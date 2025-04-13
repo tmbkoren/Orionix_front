@@ -25,7 +25,7 @@ export default function EventDisplay({events}: Props) {
               image={item.image}
             />
           )}
-          keyExtractor={(item) => item.id}
+          keyExtractor={(item) => `${item.id}-${item.name}`}
           contentContainerStyle={styles.listContainer}
         />
       </View>
