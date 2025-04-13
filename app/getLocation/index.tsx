@@ -9,6 +9,7 @@ import WeatherDataDisplay from '../components/WeatherDataDisplay';
 import Sorter from '../components/Sorter';
 import MapPointsView from '../components/MapPointsView';
 import { StatusBar } from 'expo-status-bar';
+import { Video } from 'expo-av';
 
 export default function GetLocationPage() {
   const [coordinates, setCoordinates] = useState<{
@@ -217,6 +218,14 @@ export default function GetLocationPage() {
   return (
     <GestureHandlerRootView style={styles.container}>
       <StatusBar hidden={true} />
+      <Video
+        source={require('@/assets/vertical_blue.mp4')}
+        style={StyleSheet.absoluteFill}
+        resizeMode="cover"
+        isLooping
+        shouldPlay
+        isMuted
+      />
       {currentWeatherData && (
         <WeatherDataDisplay weatherData={currentWeatherData} />
       )}
