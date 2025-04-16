@@ -16,7 +16,7 @@ export default function ConfirmationModal({ isVisible, onClose }: Props) {
         <View style={styles.modalContent}>
           <Text>You are going to be asked to provide your location</Text>
           <Pressable onPress={onClose} style={styles.closeButton}>
-            <Text>OK</Text>
+            <Text style={styles.closeButtonText}>OK</Text>
           </Pressable>
         </View>
       </Modal>
@@ -54,9 +54,8 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   closeButton: {
-    backgroundColor: '#FF0000',
+    backgroundColor: '#1a1a1a',
     borderRadius: 5,
-
     padding: 10,
     elevation: 2,
     marginTop: 10,

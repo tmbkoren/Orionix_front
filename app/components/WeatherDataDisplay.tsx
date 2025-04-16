@@ -10,9 +10,11 @@ type Props = {
 
 export default function WeatherDataDisplay({ weatherData }: Props) {
   const getIconByQuality = (quality: string) => {
-    if (quality === 'poor') {
+    if (quality === 'Poor') {
       return '☁️';
-    } else {
+    } else if (quality === 'Decent') {
+      return '🌤️';
+    } else if (quality === 'Excellent') {
       return '☀️';
     }
   };
@@ -32,10 +34,10 @@ export default function WeatherDataDisplay({ weatherData }: Props) {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#f9f9f9',
-    flex: 1,
+    marginTop: 30,
+    backgroundColor: '#000000',
     padding: 15,
-    marginBottom: 10,
+    marginBottom: 5,
     borderRadius: 8,
     elevation: 1, // For Android shadow
     shadowColor: '#000', // For iOS shadow
@@ -45,6 +47,6 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 20,
-    color: 'black',
+    color: '#A259FF',
   },
 });

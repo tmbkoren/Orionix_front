@@ -4,6 +4,7 @@ import Button from './components/Button';
 import { useRouter } from 'expo-router';
 import { useState } from 'react';
 import ConfirmationModal from './components/ConfirmationModal';
+import { StatusBar } from 'expo-status-bar';
 
 export default function Index() {
   console.log('Index page loaded');
@@ -16,6 +17,7 @@ export default function Index() {
 
   return (
     <View style={styles.container}>
+      <StatusBar hidden={true} />
       <Video
         source={require('@/assets/horizontal_blue.mp4')}
         style={StyleSheet.absoluteFill}
@@ -31,7 +33,6 @@ export default function Index() {
         title='Get Started'
         onPress={() => setShowModal(true)}
       />
-      
       <ConfirmationModal
         isVisible={showModal}
         onClose={onClose}

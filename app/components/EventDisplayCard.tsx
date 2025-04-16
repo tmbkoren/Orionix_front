@@ -30,6 +30,7 @@ export default function EventDisplayCard({ name, date, time, image }: Props) {
   );
 }
 
+// batu yapti (partially):
 const styles = StyleSheet.create({
   container: {
     padding: 15,

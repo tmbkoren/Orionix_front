@@ -8,6 +8,7 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import WeatherDataDisplay from '../components/WeatherDataDisplay';
 import Sorter from '../components/Sorter';
 import MapPointsView from '../components/MapPointsView';
+import { StatusBar } from 'expo-status-bar';
 import { Video } from 'expo-av';
 
 export default function GetLocationPage() {
@@ -85,7 +86,9 @@ export default function GetLocationPage() {
   };
 
   const fetchPOIs = async () => {
+    console.log('Fetch POI coordinates', coordinates);
     if (coordinates) {
+        console.log(coordinates.latitude, coordinates.longitude);
       try {
         const response = await fetch(
           `${process.env.EXPO_PUBLIC_API_URL}/getNearbyPlaces?lat=${coordinates.latitude}&lon=${coordinates.longitude}`
@@ -98,6 +101,7 @@ export default function GetLocationPage() {
         console.error('Error fetching points of interest:', error);
       }
     } else {
+        console.log('Fetch POI zip code', zipCode);
       try {
         const response = await fetch(
           `${process.env.EXPO_PUBLIC_API_URL}/getNearbyPlacesZip?zip_code=${zipCode}`
@@ -211,8 +215,10 @@ export default function GetLocationPage() {
     }
   }, [coordinates]);
 
+  // batu yapti:
   return (
     <GestureHandlerRootView style={styles.container}>
+      <StatusBar hidden={true} />
       <Video
         source={require('@/assets/vertical_blue.mp4')}
         style={StyleSheet.absoluteFill}
@@ -245,6 +251,7 @@ export default function GetLocationPage() {
         isLocationAllowed={locationAllowed}
         onClose={() => setModalVisible(false)}
         isVisible={modalVisible}
+        zipCode={zipCode}
         giveZipCode={setZipCode}
         giveCoordinates={setCoordinates}
         curCoordinates={coordinates}
@@ -253,6 +260,7 @@ export default function GetLocationPage() {
         <MapPointsView
           locations={pointsOfInterest}
           onClose={() => setShowPointsOfInterest(false)}
+          isVisible={showPointsOfInterest}
         />
       )}
     </GestureHandlerRootView>
@@ -269,7 +277,12 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   eventContainer: {
-    flexShrink: 1,
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    gap: 20,
+    backgroundColor: '#161317',
+    padding: 20,
   },
   text: {
     fontSize: 20,
