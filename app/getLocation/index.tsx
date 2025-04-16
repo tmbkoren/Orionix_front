@@ -215,6 +215,7 @@ export default function GetLocationPage() {
     }
   }, [coordinates]);
 
+  // batu yapti:
   return (
     <GestureHandlerRootView style={styles.container}>
       <StatusBar hidden={true} />

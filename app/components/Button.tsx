@@ -27,6 +27,7 @@ const Button: React.FC<ButtonProps> = ({ title, onPress, disabled = false }) => 
     );
 };
 
+// batu yapti (partially):
 const styles = StyleSheet.create({
     button: {
         paddingVertical: 15,
