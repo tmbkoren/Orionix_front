@@ -1,6 +1,6 @@
-# Orionix (backend)
+# Orionix (frontend)
 ---
-This is the backend portion for **Orionix**, a mobile app that lets users find stargazing events and give them realistic guidance regarding whether or not they can experience the event.
+This is the frontend portion for **Orionix**, a mobile app that lets users find stargazing events and give them realistic guidance regarding whether or not they can experience the event.
 
 Orionix was ***developed in 24 hours*** for [FullyHacks 2025](https://fullyhacks.acmcsuf.com/) Hackathon by me and [Batu Demirtaş](https://github.com/Batu-end).
 
@@ -69,9 +69,7 @@ Follow these instructions to get the backend running on your local machine.
 
 ### Prerequisites
 
-- Python
-- An API key from [OpenWeather](https://openweathermap.org/api)
-- A [Google Places API](https://developers.google.com/maps/documentation/places/web-service/overview) key
+- NodeJS
 
 ### Installation
 
@@ -81,26 +79,13 @@ Follow these instructions to get the backend running on your local machine.
     cd Orionix_front
     ```
 
-2.  **Create and activate a virtual environment:**
-    ```sh
-    python3 -m venv venv
-    source venv/bin/activate
-    ```
 
-3.  **Install the dependencies:**
+2.  **Install the dependencies:**
     ```sh
-    pip install -r requirements.txt
+    npm install
     ```
-
-4.  **Set up your environment variables:**
-    Create a file named `.env` in the root directory and add your API keys. Use the `.env.example` file as a template:
-    ```
-    # .env file
-    OPENWEATHER_API_KEY="your_openweather_api_key"
-    GOOGLE_PLACES_API_KEY="your_google_places_api_key"
-    ```
-
-5.  **Run the application:**
+    
+3.  **Run the application:**
     ```sh
-    uvicorn app.routes:app --reload
+    expo start
     ```
